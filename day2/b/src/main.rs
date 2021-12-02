@@ -8,7 +8,7 @@ fn main() {
     let mut aim = 0;
 
     for line in input {
-        let num = &line[line.len()-1..].trim().parse::<i32>().expect("Please type a number!");
+        let num = &line[line.len()-1..].trim().parse::<i32>().expect("Error");
         match line[..line.len() - 2].as_ref() {
             "forward"   => {hor += num; depth += aim*num},
             "up"        => aim -= num,
