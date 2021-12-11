@@ -3,9 +3,10 @@
 * Day 9b
 * @olafsm  
 */
-
+use std::time::Instant;
 fn main() {
-    let mut input:Vec<Vec<i32>> = include_str!("../input.txt")
+    let before = Instant::now();
+    let mut input:Vec<Vec<i32>> = include_str!("../input copy 2.txt")
         .lines()
         .map(|x| {
             x.chars().map( |y| {
@@ -17,7 +18,7 @@ fn main() {
     let mut visited_input = vec![vec![false;input_width];input_length];
 
 
-    let mut basins:Vec<i32> = Vec::new();
+    let mut basins:Vec<u64> = Vec::new();
     let mut basin_points:Vec<Vec<(usize,usize)>> = Vec::new();
 
     for (i, line) in input.iter().enumerate() {
@@ -64,34 +65,35 @@ fn main() {
                     }
                 }
             }
-            basins.push(basin_size);
+            basins.push(basin_size as u64);
             basin_points.push(temp_basin_points);
         }
     }
 
     // Visualization
-    basin_points.sort_by(|a, b| a.len().cmp(&b.len()));
-    for basin in basin_points[basin_points.len()-3..].iter() {
-        for (x,y) in basin {
-            input[*x][*y] = 777;
-        }
-    }
+    //basin_points.sort_by(|a, b| a.len().cmp(&b.len()));
+    //for basin in basin_points[basin_points.len()-3..].iter() {
+    //    for (x,y) in basin {
+    //        input[*x][*y] = 777;
+    //    }
+    //}
     basins.sort();
-    for line in input {
-        for pos in line {
-            if pos == 777{
-                print!("0");
-            } else if pos != 9 {
-                print!("-");
-            }
-            else {
-                print!("9");
-            }
-        }
-        print!("\n");
-    }
+    //for line in input {
+    //    for pos in line {
+    //        if pos == 777{
+    //            print!("0");
+    //        } else if pos != 9 {
+    //            print!("-");
+    //        }
+    //        else {
+    //            print!("9");
+    //        }
+    //    }
+    //    print!("\n");
+    //}
 
     // Result
-    let total:i32 = basins[basins.len()-3..].iter().product();
+    let total:u64 = basins[basins.len()-3..].iter().product();
+    println!("Elapsed time: {:.2?}", before.elapsed());
     eprintln!("total = {:?}", total);
 }
